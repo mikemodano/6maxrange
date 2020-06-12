@@ -1,0 +1,1 @@
+FLASK_APP=6max.py

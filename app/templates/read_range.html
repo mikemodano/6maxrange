@@ -1,0 +1,98 @@
+{% from "_render_range_bloc.html" import render_range %}
+{% from "_render_radio_field.html" import render_radio_hero, render_radio_villain, render_radio_num %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lecture des ranges</title>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+             crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+</head>
+<body>
+  <div id="content">
+    <form method ="POST" name="choix">
+    <h3>Consulter mes ranges {{ phero }} vs {{ pvillain }} </h3>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="bloc-bouton">
+                <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {{ form.csrf_token }}
+      {{ render_range(poker_range) }}
+      {{ render_radio_hero(form.phero) }}
+      {{ render_radio_villain(form.pvillain) }}
+      {{ render_radio_num(form.num_range) }}
+      {% if pvillain == 'UO' %}
+          <div class="bloc-bouton" id="action2">
+            <div class="btn-group-toggle btn-group-sm px-0 mx-auto" data-toggle="buttons">
+                <label class="btn btn-danger px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-danger"> Op/4bet value
+                </label>
+                <label class="btn btn-warning px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-warning"> Op/4bet bluff
+                </label>
+                <label class="btn btn-primary px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-primary"> Op/Call 3bet
+                </label>
+                <label class="btn btn-success px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-success"> Op/Fold
+                </label>
+                <label class="btn btn-info px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-info"> Fold
+                </label>
+              </div>
+            </div>
+      {% else %}
+          <div class="bloc-bouton" id="action1">
+            <div class="btn-group-toggle btn-group-sm px-0 mx-auto" data-toggle="buttons">
+                <label class="btn btn-danger px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-danger"> 3bet/5bet
+                </label>
+                <label class="btn btn-secondary px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-secondary"> 3bet/Call
+                </label>
+                <label class="btn btn-warning px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-warning"> 3bet/Fold
+                </label>
+                <label class="btn btn-primary px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-primary"> Call vs 3x
+                </label>
+                <label class="btn btn-success px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-success"> Call vs 2,5x
+                </label>
+                <label class="btn btn-info px-1 mx-1">
+                  <input type="radio" name="actions" value="btn btn-info"> Fold
+                </label>
+            </div>
+          </div>
+      {% endif %}
+      <div class="bloc-bouton">
+        <a class="btn btn-primary px-2 mx-2" href="/modifier_ranges">Ajouter ranges</a>
+      </div>
+    </form>
+  </div>
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous">
+    </script>
+</body>
+</html>

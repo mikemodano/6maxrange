@@ -1,0 +1,44 @@
+#content {
+  width: 30em;
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+  border: 0.05rem solid;
+}
+
+h3 {
+  margin: 0.5em;
+  text-align: center;
+}
+
+.bloc-bouton {
+  width: 29em;
+  margin: 0.5em;
+  padding: : 2em;
+  display: inline-block;
+  text-align: center;
+}
+
+.bloc-range {
+  width: 29em;
+  margin: auto;
+  padding: : 2em;
+}
+
+.hand {
+  width: 2.2em;
+  height: 2.2em;
+  margin-right: -0.3em;
+}
+
+label.hand {
+  margin-bottom: 0em;
+
+}
+
+.bloc-bouton2 {
+  width: 29em;
+  margin: 2em;
+  padding: : 2em;
+  text-align: center;
+}

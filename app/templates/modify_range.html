@@ -1,0 +1,266 @@
+{% from "_render_radio_field.html" import render_radio_hero2, render_radio_villain2, render_radio_num2 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modification des ranges</title>
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+             crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
+</head>
+<body onload="loadpage()">
+  <div id="content">
+    <form method ="POST">
+    <h3>Modifier mes ranges</h3>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="bloc-bouton">
+                <div class="btn btn-primary btn-success btn-block">{{ message }}</div>
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div id="hands" class="bloc-range">
+      {{ form.csrf_token }}
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AA">AA</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AKs">AKs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AQs">AQs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AJs">AJs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="ATs">ATs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A9s">A9s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A8s">A8s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A7s">A7s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A6s">A6s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A5s">A5s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A4s">A4s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A3s">A3s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A2s">A2s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AKo">AKo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KK">KK</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KQs">KQs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KJs">KJs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KTs">KTs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K9s">K9s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K8s">K8s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K7s">K7s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K6s">K6s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K5s">K5s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K4s">K4s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K3s">K3s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K2s">K2s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AQo">AQo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KQ">KQ</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="QQ">QQ</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="QJs">QJs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="QTs">QTs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q9s">Q9s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q8s">Q8s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q7s">Q7s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q6s">Q6s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q5s">Q5s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q4s">Q4s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q3s">Q3s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q2s">Q2s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AJo">AJo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KJo">KJo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="QJo">QJo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="JJ">JJ</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="JTs">JTs</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J9s">J9s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J8s">J8s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J7s">J7s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J6s">J6s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J5s">J5s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J4s">J4s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J3s">J3s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J2s">J2s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="ATo">ATo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="KTo">KTo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="QTo">QTo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="JTo">JTo</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="TT">TT</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T9s">T9s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T8s">T8s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T7s">T7s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T6s">T6s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T5s">T5s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T4s">T4s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T3s">T3s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T2s">T2s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A9o">A9o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K9o">K9o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q9o">Q9o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J9o">J9o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T9o">T9o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="99">99</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="98s">98s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="97s">97s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="96s">96s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="95s">95s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="94s">94s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="93s">93s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="92s">92s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A8o">A8o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K8o">K8o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q8o">Q8o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J8o">J8o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T8o">T8o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="98o">98o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="88">88</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="87s">87s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="86s">86s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="85s">85s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="84s">84s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="83s">83s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="82s">82s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A7o">A7o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K7o">K7o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q7o">Q7o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J7o">J7o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T7o">T7o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="97o">97o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="87o">87o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="77">77</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="76s">76s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="75s">75s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="74s">74s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="73s">73s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="72s">72s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A6o">A6o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K6o">K6o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q6o">Q6o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J6o">J6o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T6o">T6o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="96o">96o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="86o">86o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="76o">76o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="66">66</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="65s">65s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="64s">64s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="63s">63s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="62s">62s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A5o">A5o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K5o">K5o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q5o">Q5o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J5o">J5o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T5o">T5o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="95o">95o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="85o">85o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="75o">75o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="65o">65o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="55">55</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="54s">54s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="53s">53s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="52s">52s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A4o">A4o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K4o">K4o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q4o">Q4o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J4o">J4o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T4o">T4o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="94o">94o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="84o">84o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="74o">74o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="64o">64o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="54o">54o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="44">44</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="43s">43s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="42s">42s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A3o">A3o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K3o">K3o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q3o">Q3o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J3o">J3o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T3o">T3o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="93o">93o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="83o">83o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="73o">73o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="63o">63o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="53o">53o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="43o">43o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="33">33</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="32s">32s</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="A2o">A2o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="K2o">K2o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="Q2o">Q2o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="J2o">J2o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="T2o">T2o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="92o">92o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="82o">82o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="72o">72o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="62o">62o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="52o">52o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="42o">42o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="32o">32o</button>
+      <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="22">22</button>
+    </div>
+      {{ render_radio_hero2(form.phero) }}
+      {{ render_radio_villain2(form.pvillain) }}
+      {{ render_radio_num2(form.num_range) }}
+      <div class="d-none" id="action2">
+        <div class="btn-group-toggle btn-group-sm px-0 mx-auto" data-toggle="buttons">
+            <label class="btn btn-danger px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-danger"> Op/4bet value
+            </label>
+            <label class="btn btn-warning px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-warning"> Op/4bet bluff
+            </label>
+            <label class="btn btn-primary px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-primary"> Op/Call 3bet
+            </label>
+            <label class="btn btn-success px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-success"> Op/Fold
+            </label>
+            <label class="btn btn-info px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-info"> Fold
+            </label>
+          </div>
+        </div>
+      <div class="bloc-bouton" id="action1">
+        <div class="btn-group-toggle btn-group-sm px-0 mx-auto" data-toggle="buttons">
+            <label class="btn btn-danger px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-danger"> 3bet/5bet
+            </label>
+            <label class="btn btn-secondary px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-secondary"> 3bet/Call
+            </label>
+            <label class="btn btn-warning px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-warning"> 3bet/Fold
+            </label>
+            <label class="btn btn-primary px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-primary"> Call vs 3x
+            </label>
+            <label class="btn btn-success px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-success"> Call vs 2,5x
+            </label>
+            <label class="btn btn-info px-1 mx-1">
+              <input type="radio" name="actions" value="btn btn-info"> Fold
+            </label>
+        </div>
+      </div>
+      <div class="bloc-bouton">
+        <a class="btn btn-primary px-2 mx-2" href="/">Retour vers lecture</a>
+        <button class="btn btn-primary px-2 mx-2" type="submit" id="AddNewRange">Enregistrer</button>
+      </div>
+      <div>{{ form.new_range }}</div>
+    </form>
+  </div>
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous">
+    </script>
+</body>
+</html>

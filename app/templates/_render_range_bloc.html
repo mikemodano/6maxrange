@@ -1,0 +1,7 @@
+{% macro render_range(poker_range) %}
+<div class="bloc-range">
+    {% for id, class_name in poker_range.items() %}
+    <label class="{{ class_name }}" name="hand" id="{ id }">{{ id }}</label>
+    {% endfor %}
+</div>
+{% endmacro %}

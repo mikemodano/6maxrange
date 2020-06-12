@@ -1,0 +1,77 @@
+{% macro render_radio_hero(field) %}
+<div class="bloc-bouton" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-4" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowFacing(this.id)">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio_hero2(field) %}
+<div class="bloc-bouton" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-4" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowFacing2(this.id)">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio_villain(field) %}
+<div class="bloc-bouton" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-2" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowAction(this.id)">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio_villain2(field) %}
+<div class="bloc-bouton" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-2" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowAction2(this.id)">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio_num(field) %}
+<div class="bloc-bouton" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-4" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-4 mx-3" onclick="ShowFreq(this.id)">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio_num2(field) %}
+<div class="bloc-bouton" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-4" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-4 mx-3">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}

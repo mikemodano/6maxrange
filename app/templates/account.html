@@ -1,0 +1,7 @@
+{% extends "menu.html" %}
+
+{% block content %}
+    <h3>Mon compte</h3>
+    <p>Vous êtes connectés en tant que <b>{{ current_user.username }}</b></p>
+    <p>Pour vous déconnecter : <a href="{{ url_for('logout') }}" class="badge badge-info">Cliquez ici</a></p>
+{% endblock %}

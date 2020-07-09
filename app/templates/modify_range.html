@@ -1,29 +1,19 @@
 {% from "_render_radio_field.html" import render_radio_hero2, render_radio_villain2, render_radio_num2 %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Modification des ranges</title>
-     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-             crossorigin="anonymous">
-     <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}" />
-</head>
-<body onload="loadpage()">
-  <div id="content">
+{% extends "menu1.html" %}
+
+{% block content %}
     <form method ="POST">
     <h3>Modifier mes ranges</h3>
-    {% with messages = get_flashed_messages() %}
+      {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
             <div class="bloc-bouton">
-                <div class="btn btn-primary btn-success btn-block">{{ message }}</div>
+                <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
             </div>
           {% endfor %}
         {% endif %}
-    {% endwith %}
+      {% endwith %}
     <div id="hands" class="bloc-range">
       {{ form.csrf_token }}
       <button type="button" class="btn btn-info px-0 hand" name="hand" onclick="getId(this.id)" id="AA">AA</button>
@@ -241,26 +231,8 @@
         </div>
       </div>
       <div class="bloc-bouton">
-        <a class="btn btn-primary px-2 mx-2" href="/">Retour vers lecture</a>
         <button class="btn btn-primary px-2 mx-2" type="submit" id="AddNewRange">Enregistrer</button>
       </div>
       <div>{{ form.new_range }}</div>
     </form>
-  </div>
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous">
-    </script>
-</body>
-</html>
+{% endblock %}

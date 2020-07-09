@@ -1,6 +1,6 @@
 function loadpage() {
-    document.getElementById("BB").checked = true;
-    document.getElementById("vs BU").checked = true;
+    document.getElementById('phero-0').click();
+    document.getElementById('pvillain-2').click();
 }
 
 var wtf_range = new Object();

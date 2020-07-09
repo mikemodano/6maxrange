@@ -2,11 +2,13 @@ import json
 import datetime
 import math
 
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import current_user, login_user, logout_user
+from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import RadioForm
-from app.models import PokerRange
+from app.forms import RadioForm, RegistrationForm, LoginForm
+from app.models import PokerRange, User
 
 @app.route('/')
 @app.route('/index/')
@@ -23,59 +25,108 @@ def modifier_ranges():
     all_pvillain = [('UO', 'UO'), ('SB', 'vs SB'), ('BU', 'vs BU'), ('CO', 'vs CO'), ('MP', 'vs MP'), ('UTG', 'vs UTG')]
     form.pvillain.choices = all_pvillain
     range_vierge = PokerRange.query.filter_by(phero='NA', pvillain='NA', num_range=0).first()
-
-    if form.validate_on_submit():
-        if new_range == '':
-            flash("Aucun combo n'a été sélectionné")
+    if current_user.is_anonymous:
+        flash("Vous devez être connecté pour créer des ranges")
+        return redirect(url_for('login'))
+    if form.validate_on_submit() and current_user.is_authenticated:
+        if current_user.id == 2:
+            flash("Ces ranges ne sont pas modifiables")
+            return redirect(url_for('modifier_ranges'))
         else:
-            query = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range).first()
-            range_vierge = range_vierge.to_dict()
-            poker_range = json.loads(range_vierge['poker_range'])
-            for hand, actions in json.loads(new_range).items():
-                poker_range[hand] = actions
-            if query is None:
-                rg = PokerRange(phero=phero, pvillain=pvillain, num_range=num_range, poker_range=json.dumps(poker_range))
-                db.session.add(rg)
-                db.session.commit()
-                flash('La range {} vs {} N°{} a été ajoutée à la base de données'.format(phero, pvillain, num_range))
+            if new_range == '':
+                flash("Aucun combo n'a été sélectionné")
             else:
-                query.poker_range = json.dumps(poker_range)
-                db.session.commit()
-                flash('La range {} vs {} N°{} a bien été mise à jour'.format(phero, pvillain, num_range))
-        return render_template('modify_range.html', form=form)
+                query = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).first()
+                range_vierge = range_vierge.to_dict()
+                poker_range = json.loads(range_vierge['poker_range'])
+                for hand, actions in json.loads(new_range).items():
+                    poker_range[hand] = actions
+                if query is None:
+                    rg = PokerRange(phero=phero, pvillain=pvillain, num_range=num_range, poker_range=json.dumps(poker_range), user_id=current_user.id)
+                    db.session.add(rg)
+                    db.session.commit()
+                    flash('La range {} vs {} N°{} a été ajoutée à la base de données'.format(phero, pvillain, num_range))
+                else:
+                    query.poker_range = json.dumps(poker_range)
+                    db.session.commit()
+                    flash("La range {} vs {} N°{} a bien été mise à jour".format(phero, pvillain, num_range))
+            return redirect(url_for('modifier_ranges'))
     else:
         return render_template('modify_range.html', form=form)
 
 @app.route('/ranges/<phero>/<pvillain>/<int:num_range>/')
 def lire_ranges(phero, pvillain, num_range):
-    form = RadioForm()
-    all_pvillain = [('SB', 'vs SB'), ('BU', 'vs BU'), ('CO', 'vs CO'), ('MP', 'vs MP'), ('UTG', 'vs UTG'), ('UO', 'UO')]
-    if phero == 'BB':
-        all_pvillain.remove(('UO', 'UO'))
-        list_pvillain = all_pvillain
+    if current_user.is_anonymous:
+        flash("Vous devez être connecté pour lire des ranges")
+        return redirect(url_for('login'))
     else:
-        list_pvillain = all_pvillain[-(5-all_pvillain.index((phero, "vs " + phero))):]
-    form.pvillain.choices = list_pvillain
-    form.pvillain.data = pvillain
-    form.phero.data = phero
-    date = datetime.datetime.now()
-    minutes = date.minute
-    liste_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain).all()
-    test_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range).all()
-    if (len(liste_range) == 0) or (num_range != 0 and len(test_range) == 0):
-        poker_range = PokerRange.query.filter_by(phero='NA', pvillain='NA', num_range=0).first()
-        flash('Aucune range définie pour cette situation')
-        return render_template('read_range.html', title='Lecture', form=form, pvillain=pvillain, phero=phero, poker_range=json.loads(str(poker_range)))
-    else:
-        nb_range = len(liste_range)
-        if num_range == 0:
-            if minutes == 0:
-                num_range = 1
-            else:
-                num_range = math.ceil(minutes/(60/nb_range))
-            return redirect(url_for('lire_ranges', phero=phero, pvillain=pvillain, num_range=num_range))
+        form = RadioForm()
+        all_pvillain = [('SB', 'vs SB'), ('BU', 'vs BU'), ('CO', 'vs CO'), ('MP', 'vs MP'), ('UTG', 'vs UTG'), ('UO', 'UO')]
+        if phero == 'BB':
+            all_pvillain.remove(('UO', 'UO'))
+            list_pvillain = all_pvillain
         else:
-            form.num_range.data = num_range
-            poker_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range).first()
-            return render_template('read_range.html', title='Lecture', form=form, phero=phero, pvillain=pvillain, poker_range=json.loads(str(poker_range)))
+            list_pvillain = all_pvillain[-(5-all_pvillain.index((phero, "vs " + phero))):]
+        form.pvillain.choices = list_pvillain
+        form.pvillain.data = pvillain
+        form.phero.data = phero
+        date = datetime.datetime.now()
+        minutes = date.minute
+        liste_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, user_id=current_user.id).all()
+        test_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).all()
+        if (len(liste_range) == 0) or (num_range != 0 and len(test_range) == 0):
+            poker_range = PokerRange.query.filter_by(phero='NA', pvillain='NA', num_range=0).first()
+            flash("Aucune range définie pour cette situation")
+            return render_template('read_range.html', title='Lecture', form=form, pvillain=pvillain, phero=phero, poker_range=json.loads(str(poker_range)))
+        else:
+            nb_range = len(liste_range)
+            if num_range == 0:
+                if minutes == 0:
+                    num_range = 1
+                else:
+                    num_range = math.ceil(minutes/(60/nb_range))
+                return redirect(url_for('lire_ranges', phero=phero, pvillain=pvillain, num_range=num_range))
+            else:
+                form.num_range.data = num_range
+                poker_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).first()
+                return render_template('read_range.html', title='Lecture', form=form, phero=phero, pvillain=pvillain, poker_range=json.loads(str(poker_range)))
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("Bienvenue {}, ton compte a été créé!".format(form.username.data))
+        return redirect(url_for('modifier_ranges'))
+    return render_template('register.html', title='Register', form=form)
+
+@app.route('/account', methods=['GET', 'POST'])
+def mon_compte():
+    return render_template('account.html', title='Mon compte')

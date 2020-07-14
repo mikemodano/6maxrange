@@ -29,7 +29,7 @@ function ShowFacing(monId) {
   }
   let ladate=new Date();
   let minutes = ladate.getMinutes();
-  window.location = "http://127.0.0.1:5000/ranges/" + monId + "/" + url_villain + "/0/";
+  window.location = window.location.protocol + "//" + window.location.host + "/ranges/" + monId + "/" + url_villain + "/0/";
 };
 
 function ShowFacing2(monId) {
@@ -53,7 +53,7 @@ function ShowAction(monId) {
   let state_numrange = choix.elements.num_range;
   let ladate=new Date();
   let minutes = ladate.getMinutes();
-  window.location = "http://127.0.0.1:5000/ranges/" + state_phero.value + "/" + monId.replace("vs ","") + "/0/";
+  window.location = window.location.protocol + "//" + window.location.host + "/ranges/" + state_phero.value + "/" + monId.replace("vs ","") + "/0/";
 };
 
 function ShowAction2(monId) {
@@ -71,7 +71,7 @@ function ShowFreq(monId) {
   let choix = document.forms.choix;
   let state_phero = choix.elements.phero;
   let state_pvillain = choix.elements.pvillain;
-  window.location = "http://127.0.0.1:5000/ranges/" + state_phero.value + "/" + state_pvillain.value + "/" + monId + "/";
+  window.location = window.location.protocol + "//" + window.location.host + "/ranges/" + state_phero.value + "/" + state_pvillain.value + "/" + monId + "/";
 };
 
 function razRange() {

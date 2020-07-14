@@ -32,3 +32,12 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Merci d'utiliser une autre adresse email")
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Changer son mot de passe')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Mot de passe', validators=[DataRequired()])
+    password2 = PasswordField('Mot de passe', validators=[DataRequired(), EqualTo('password', message="Les 2 mots de passe ne correspondent pas")])
+    submit = SubmitField('Changer son mot de passe')

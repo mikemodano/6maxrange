@@ -17,18 +17,19 @@
             {{ form.username.label }}<br>
             {{ form.username(size=25) }}<br>
             {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <p class="alert alert-danger" role="alert">[{{ error }}]</p>
             {% endfor %}
         </p>
         <p>
             {{ form.password.label }}<br>
             {{ form.password(size=25) }}<br>
             {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <p class="alert alert-danger" role="alert">[{{ error }}]</p>
             {% endfor %}
         </p>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         <p>{{ form.submit() }}</p>
     </form>
-<p>Nouveau sur le site <a href="{{ url_for('register') }}" class="badge badge-info">Créer un compte</a></p>
+<p>Nouveau sur le site ?    <a href="{{ url_for('register') }}" class="badge badge-info">Créer un compte</a></p>
+<p>Mot de passe perdu ?   <a href="{{ url_for('reset_password_request') }}" class="badge badge-info">Changer mon mot de passe</a></p>
 {% endblock %}

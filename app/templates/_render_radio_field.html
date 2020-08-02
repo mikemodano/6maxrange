@@ -67,7 +67,7 @@
 <div class="bloc-bouton" id="{{ field.label.text }}">
   <div class="btn-group-toggle px-4" data-toggle="buttons">
       {% for subfield in field %}
-      <label id="{{ subfield.label.text }}" class="btn btn-primary px-4 mx-3">
+      <label id="{{ subfield.label.text }}" class="btn btn-primary px-4 mx-3" onclick="ShowFreq2(this.id)">
           {{ subfield }}
           {{ subfield.label.text }}
       </label>

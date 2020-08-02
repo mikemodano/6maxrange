@@ -1,12 +1,8 @@
-function loadpage() {
-    document.getElementById('phero-0').click();
-    document.getElementById('pvillain-2').click();
-}
-
 var wtf_range = new Object();
 
 function getId(monId) {
   let ele = document.getElementsByName('actions');
+  wtf_range = JSON.parse(document.getElementById("new_range").value);
   for(i = 0; i < ele.length; i++) {
       if(ele[i].checked)
       document.getElementById(monId).className = ele[i].value + " px-0 hand";
@@ -27,44 +23,36 @@ function ShowFacing(monId) {
   else {
     url_villain = state_pvillain.value;
   }
-  let ladate=new Date();
-  let minutes = ladate.getMinutes();
   window.location = window.location.protocol + "//" + window.location.host + "/ranges/" + monId + "/" + url_villain + "/0/";
 };
 
 function ShowFacing2(monId) {
-    document.getElementById("UO").className = "btn btn-primary px-3 mx-1";
-    document.getElementById("vs SB").className = "btn btn-primary px-3 mx-1";
-    document.getElementById("vs BU").className = "btn btn-primary px-3 mx-1";
-    document.getElementById("vs CO").className = "btn btn-primary px-3 mx-1";
-    document.getElementById("vs MP").className = "btn btn-primary px-3 mx-1";
-    document.getElementById("vs UTG").className = "btn btn-primary px-3 mx-1";
-    if (monId == "BB") {
-        document.getElementById("UO").className = "d-none";
-    }
-    else {
-        document.getElementById("vs " + monId).className = "d-none";
-    }
+  let choix = document.forms.choix2;
+  let state_pvillain = choix.elements.pvillain;
+  if (monId == "BB" && state_pvillain.value == "UO") {
+    url_villain = "BU";
+  }
+  else if (state_pvillain.value == monId || state_pvillain.value == "") {
+    url_villain = "UO";
+  }
+  else {
+    url_villain = state_pvillain.value;
+  }
+  window.location = window.location.protocol + "//" + window.location.host + "/modifier_ranges/" + monId + "/" + url_villain + "/0/";
 };
 
 function ShowAction(monId) {
   let choix = document.forms.choix;
   let state_phero = choix.elements.phero;
   let state_numrange = choix.elements.num_range;
-  let ladate=new Date();
-  let minutes = ladate.getMinutes();
   window.location = window.location.protocol + "//" + window.location.host + "/ranges/" + state_phero.value + "/" + monId.replace("vs ","") + "/0/";
 };
 
 function ShowAction2(monId) {
-    if (monId == "UO") {
-        document.getElementById("action2").className = "bloc-bouton";
-        document.getElementById("action1").className = "d-none";
-    }
-    else {
-        document.getElementById("action1").className = "bloc-bouton";
-        document.getElementById("action2").className = "d-none";
-    }
+  let choix = document.forms.choix2;
+  let state_phero = choix.elements.phero;
+  let state_numrange = choix.elements.num_range;
+  window.location = window.location.protocol + "//" + window.location.host + "/modifier_ranges/" + state_phero.value + "/" + monId.replace("vs ","") + "/0/";
 };
 
 function ShowFreq(monId) {
@@ -72,6 +60,13 @@ function ShowFreq(monId) {
   let state_phero = choix.elements.phero;
   let state_pvillain = choix.elements.pvillain;
   window.location = window.location.protocol + "//" + window.location.host + "/ranges/" + state_phero.value + "/" + state_pvillain.value + "/" + monId + "/";
+};
+
+function ShowFreq2(monId) {
+  let choix = document.forms.choix2;
+  let state_phero = choix.elements.phero;
+  let state_pvillain = choix.elements.pvillain;
+  window.location = window.location.protocol + "//" + window.location.host + "/modifier_ranges/" + state_phero.value + "/" + state_pvillain.value + "/" + monId + "/";
 };
 
 function razRange() {

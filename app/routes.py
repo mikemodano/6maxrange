@@ -11,49 +11,67 @@ from app.forms import RadioForm, RegistrationForm, LoginForm, ResetPasswordReque
 from app.models import PokerRange, User
 from app.email import send_password_reset_email
 
+
 @app.route('/')
 @app.route('/index/')
 def index():
     return redirect(url_for('lire_ranges', phero='BB', pvillain='BU', num_range=1))
 
-@app.route('/modifier_ranges', methods=['GET', 'POST'])
-def modifier_ranges():
+
+@app.route('/modifier_ranges/<phero>/<pvillain>/<int:num_range>/', methods=['GET', 'POST'])
+def modifier_ranges(phero, pvillain, num_range):
     form = RadioForm()
-    phero = form.phero.data
-    pvillain = form.pvillain.data
-    num_range = form.num_range.data
-    new_range = form.new_range.data
-    all_pvillain = [('UO', 'UO'), ('SB', 'vs SB'), ('BU', 'vs BU'), ('CO', 'vs CO'), ('MP', 'vs MP'), ('UTG', 'vs UTG')]
+    form.pvillain.data = pvillain
+    form.phero.data = phero
+    form.num_range.data = num_range
+    all_pvillain = [('SB', 'vs SB'), ('BU', 'vs BU'), ('CO', 'vs CO'), ('MP', 'vs MP'), ('UTG', 'vs UTG'),
+                    ('UO', 'UO')]
     form.pvillain.choices = all_pvillain
-    range_vierge = PokerRange.query.filter_by(phero='NA', pvillain='NA', num_range=0).first()
-    if current_user.is_anonymous:
-        flash("Vous devez être connecté pour créer des ranges")
-        return redirect(url_for('login'))
-    if form.validate_on_submit() and current_user.is_authenticated:
-        if current_user.id == 2:
+    new_range = form.new_range.data
+    if request.method == 'POST' and form.validate() and current_user.is_authenticated:
+        if current_user.id == 3:
             flash("Les ranges ne sont pas modifiables pour ce compte")
-            return redirect(url_for('modifier_ranges'))
+            return redirect(url_for('modifier_ranges', phero=phero, pvillain=pvillain, num_range=num_range))
         else:
-            if new_range == '':
-                flash("Aucun combo n'a été sélectionné")
+            query = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).first()
+            range_vierge = PokerRange.query.filter_by(phero='NA', pvillain='NA', num_range=0).first()
+            range_vierge = range_vierge.to_dict()
+            add_range = json.loads(range_vierge['poker_range'])
+            for hand, actions in json.loads(new_range).items():
+                add_range[hand] = actions
+            if query is None:
+                rg = PokerRange(phero=phero, pvillain=pvillain, num_range=num_range, poker_range=json.dumps(add_range),
+                                user_id=current_user.id)
+                db.session.add(rg)
+                db.session.commit()
+                flash('La range {} vs {} N°{} a été ajoutée à la base de données'.format(phero, pvillain, num_range))
             else:
-                query = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).first()
-                range_vierge = range_vierge.to_dict()
-                poker_range = json.loads(range_vierge['poker_range'])
-                for hand, actions in json.loads(new_range).items():
-                    poker_range[hand] = actions
-                if query is None:
-                    rg = PokerRange(phero=phero, pvillain=pvillain, num_range=num_range, poker_range=json.dumps(poker_range), user_id=current_user.id)
-                    db.session.add(rg)
-                    db.session.commit()
-                    flash('La range {} vs {} N°{} a été ajoutée à la base de données'.format(phero, pvillain, num_range))
-                else:
-                    query.poker_range = json.dumps(poker_range)
-                    db.session.commit()
-                    flash("La range {} vs {} N°{} a bien été mise à jour".format(phero, pvillain, num_range))
-            return redirect(url_for('modifier_ranges'))
+                query.poker_range = json.dumps(add_range)
+                db.session.commit()
+                flash("La range {} vs {} N°{} a bien été mise à jour".format(phero, pvillain, num_range))
+            return redirect(url_for('modifier_ranges', phero=phero, pvillain=pvillain, num_range=num_range))
+    elif current_user.is_anonymous:
+        flash("Vous devez être connecté pour modifier des ranges")
+        return redirect(url_for('login'))
+    elif num_range == 0:
+        return redirect(url_for('modifier_ranges', phero=phero, pvillain=pvillain, num_range=1))
     else:
-        return render_template('modify_range.html', form=form)
+        if phero == 'BB':
+            all_pvillain.remove(('UO', 'UO'))
+            list_pvillain = all_pvillain
+        else:
+            list_pvillain = all_pvillain[-(5-all_pvillain.index((phero, "vs " + phero))):]
+        form.pvillain.choices = list_pvillain
+        liste_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, user_id=current_user.id).all()
+        test_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range,
+                                                user_id=current_user.id).all()
+        if (len(liste_range) == 0) or (num_range != 0 and len(test_range) == 0):
+            poker_range = PokerRange.query.filter_by(phero='NA', pvillain='NA', num_range=0).first()
+        else:
+            poker_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).first()
+        return render_template('modify_range.html', title='Modification', form=form, phero=phero, pvillain=pvillain,
+                               num_range=num_range, new_range=poker_range, poker_range=json.loads(str(poker_range)))
+
 
 @app.route('/ranges/<phero>/<pvillain>/<int:num_range>/')
 def lire_ranges(phero, pvillain, num_range):
@@ -92,6 +110,7 @@ def lire_ranges(phero, pvillain, num_range):
                 poker_range = PokerRange.query.filter_by(phero=phero, pvillain=pvillain, num_range=num_range, user_id=current_user.id).first()
                 return render_template('read_range.html', title='Lecture', form=form, phero=phero, pvillain=pvillain, poker_range=json.loads(str(poker_range)))
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -109,10 +128,12 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Se connecter', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -128,9 +149,11 @@ def register():
         return redirect(url_for('modifier_ranges'))
     return render_template('register.html', title='Register', form=form)
 
+
 @app.route('/account', methods=['GET', 'POST'])
 def mon_compte():
     return render_template('account.html', title='Mon compte')
+
 
 @app.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
@@ -144,6 +167,7 @@ def reset_password_request():
         flash('Veuillez vérifier vos email et suivez les instructions')
         return redirect(url_for('login'))
     return render_template('reset_password_request.html',title='Changer de mot de passe', form=form)
+
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):

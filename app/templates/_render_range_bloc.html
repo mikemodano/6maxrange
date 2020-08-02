@@ -5,3 +5,11 @@
     {% endfor %}
 </div>
 {% endmacro %}
+
+{% macro render_range_editable(poker_range) %}
+<div class="bloc-range">
+    {% for id, class_name in poker_range.items() %}
+    <button type="button" class="{{ class_name }}" name="hand" onclick="getId(this.id)" id="{{ id }}">{{ id }}</button>
+    {% endfor %}
+</div>
+{% endmacro %}

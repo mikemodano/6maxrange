@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db, login, app
 
+
 class PokerRange(db.Model, SerializerMixin):
     __tablename__ = 'pokerrange'
     id = db.Column(db.Integer, primary_key=True)
@@ -20,6 +21,7 @@ class PokerRange(db.Model, SerializerMixin):
 
     def __repr__(self):
         return self.poker_range
+
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -47,6 +49,7 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
+
 
 @login.user_loader
 def load_user(id):

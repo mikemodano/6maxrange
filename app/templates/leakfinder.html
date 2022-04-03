@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3 class="col-md-auto text-center my-4">Améliorer son jeu</h3>
+    <p class="col-md-auto text-center my-4">Votre base de données contient <b>{{ nb_mains }} mains</b></p>
+    <form name="form" action="" method="post" class="form" role="form" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row justify-content-center">
+            <div class="col-md-3 text-center">
+                <div class="form-group">
+                    <label>Filtrer sur une room :</label>
+                    {% for subfield in form.rooms %}
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-primary mr-2 mb-2" for="{{ subfield.id }}">{{ subfield.label.text }}
+                            {{ subfield(autocomplete="off") }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <label>Filtrer sur une limite :</label>
+                    {% for subfield in form.limits %}
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-primary mr-2 mb-2" for="{{ subfield.id }}">{{ subfield.label.text }}
+                            {{ subfield(autocomplete="off") }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    <span class="input-group-text">Filtrer sur les x dernières mains :</span>
+                    <div class="col-sm2">
+                        {{ form.lasthands(class="form-control", placeholder="10 000") }}
+                    </div>
+                    {% if form.lasthands.errors %}
+                        {% for error in form.lasthands.errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.date_debut.label(class="input-group-text") }}
+                    {{ form.date_debut(class="form-control") }}
+                    {% if form.date_debut.errors %}
+                        <div class="btn btn-primary btn-danger btn-block">Le format de la date de début n'est pas valide (différent de dd/mm/aaaa)</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.date_fin.label(class="input-group-text") }}
+                    {{ form.date_fin(class="form-control") }}
+                    {% if form.date_fin.errors %}
+                        <div class="btn btn-primary btn-danger btn-block">Le format de la date de début n'est pas valide (différent de dd/mm/aaaa)</div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                          {% for message in messages %}
+                                <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
+                          {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success btn-block" type="button" style="display:none;" id="loading" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Création du rapport en cours...
+                    </button>
+                </div>
+                <div class="form-group">
+                    {{ form.filtre(class="btn btn-outline-success") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-success btn-block", onclick="ShowWaiting()") }}
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

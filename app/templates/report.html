@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3 class="col-md-auto text-center my-4">Rapport LeakFinder</h3>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="d-grid gap-2 col-6 mx-auto my-4 align-items-center justify-content-center">
+                <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
+            </div>
+          {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h5 class="col-md-auto text-center my-2">Taille de l'échantillon : {{ nbHH }} mains</h5>
+    <h5 class="col-md-auto text-center my-2">Période : du {{ startdate }} au {{ enddate }}</h5>
+    <h5 class="col-md-auto text-center my-2">Winrate : {{ winrate }} bb/100 +/- {{ std_dev }} bb/100</h5>
+    {% for table in tables %}
+        <h4 class="col-md-auto text-center mt-4">{{ table[0] }}</h4>
+        <div class="table-responsive-sm">
+            {{ table[1] | safe }}
+        </div>
+    {% endfor %}
+    {% for phrases in noleak %}
+    <h5 class="col-md-auto text-center mt-4">{{ phrases }}</h5>
+    {% endfor %}
+{% endblock %}

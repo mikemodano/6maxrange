@@ -1,35 +1,44 @@
-{% extends "menu.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h3>Se connecter</h3>
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="bloc-bouton">
-                <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-    <form action="" method="post" novalidate>
+    <h1 class="text-center my-3">Se connecter</h1>
+    <form action="" method="post" class="form" role="form" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=25) }}<br>
-            {% for error in form.username.errors %}
-            <p class="alert alert-danger" role="alert">[{{ error }}]</p>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=25) }}<br>
-            {% for error in form.password.errors %}
-            <p class="alert alert-danger" role="alert">[{{ error }}]</p>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
+        <div class="row justify-content-center">
+            <div class="col-md-3 text-center">
+                <div class="form-group">
+                 {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                      {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">{{ message }}</div>
+                      {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                </div>
+                <div class="form-group">
+                    {{ form.username.label }}
+                    {{ form.username(class="form-control") }}
+                    {% for error in form.username.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="form-control") }}
+                    {% for error in form.password.errors %}
+                        <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.remember_me(class="form-check-input") }}
+                    {{ form.remember_me.label(class="form-check-label") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary btn-inline") }}
+                </div>
+            </div>
+        </div>
     </form>
-<p>Nouveau sur le site ?    <a href="{{ url_for('register') }}" class="badge badge-info">Créer un compte</a></p>
-<p>Mot de passe perdu ?   <a href="{{ url_for('reset_password_request') }}" class="badge badge-info">Changer mon mot de passe</a></p>
+    <h5 class="text-center mt-4">Nouveau sur le site ?<a href="{{ url_for('register') }}" class="badge badge-info ml-3">Créer un compte</a></h5>
+    <h5 class="text-center mt-4">Mot de passe perdu ?<a href="{{ url_for('reset_password_request') }}" class="badge badge-info ml-3">Changer mon mot de passe</a></h5>
 {% endblock %}

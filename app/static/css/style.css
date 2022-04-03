@@ -6,9 +6,12 @@
   border: 0.05rem solid;
 }
 
-h4, h3, p {
-  margin: 0.5em;
-  text-align: center;
+#content100 {
+  width: 90%;
+  margin: 0.5%;
+  display: inline-block;
+  float: left;
+  border: 0.05% solid;
 }
 
 .bloc-bouton {
@@ -19,26 +22,85 @@ h4, h3, p {
   text-align: center;
 }
 
-.bloc-range {
+.bloc-range-read {
   width: 29em;
   margin: auto;
-  padding: : 2em;
+  padding: 0em;
 }
 
-.hand {
+.bloc-range-edit {
+  width: 27em;
+  margin: auto;
+  padding: 0em;
+}
+
+.hand-read {
   width: 2.2em;
   height: 2.2em;
   margin-right: -0.3em;
+  margin-bottom: 0;
 }
 
-label.hand {
-  margin-bottom: 0em;
+.hand-edit {
+  width: 2em;
+  height: 2em;
+  margin-right: -0.3em;
+  line-height: 1em;
+  text-align: center;
+}
 
 }
 
-.bloc-bouton2 {
-  width: 29em;
+.bloc-bouton100 {
+  width: 90%;
+  margin: 0.5em;
+  padding: : 2%;
+  text-align: center;
+}
+
+.bloc-entete {
+  width: 90%;
   margin: 2em;
   padding: : 2em;
   text-align: center;
+}
+
+table.dataframe, .dataframe th, .dataframe td {
+  border: none;
+  border-bottom: 1px solid #C8C8C8;
+  border-collapse: collapse;
+  text-align:center;
+  padding: 10px;
+  margin-bottom: 40px;
+  font-size: 0.9em;
+}
+
+.tab_report th {
+    background-color: #add8e6;
+    color: white;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.css-addremoverange {
+  width: 7em;
+  height: 7em;
+  display: flex;
+  align-items: center;
+}
+
+.css-importer {
+  margin-top: 3rem;
 }

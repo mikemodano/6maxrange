@@ -1,72 +1,106 @@
-{% from "_render_range_bloc.html" import render_range_editable %}
+{% from "_render_range_bloc.html" import render_range_editable, render_hidden_range %}
 {% from "_render_radio_field.html" import render_radio_hero2, render_radio_villain2, render_radio_num2 %}
 
-{% extends "menu.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
+    <h3 class="col-md-auto text-center my-4">Modifier mes ranges {{ phero }} vs {{ pvillain }}</h3>
     <form method ="POST" name="choix2">
-    <h4>Modifier mes ranges {{ phero }} vs {{ pvillain }} N° {{ num_range }}</h4>
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="bloc-bouton">
+        <div class="row justify-content-center">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages %}
+            <div class="d-grid gap-2 col-6 mx-auto my-4 align-items-center justify-content-center">
                 <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
             </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-      {{ form.csrf_token }}
-      {{ render_range_editable(poker_range) }}
-      {{ render_radio_hero2(form.phero) }}
-      {{ render_radio_villain2(form.pvillain) }}
-      {{ render_radio_num2(form.num_range) }}
-      {% if pvillain == 'UO' %}
-          <div class="bloc-bouton" id="action2">
-            <div class="btn-group-toggle btn-group-sm px-0 mx-auto" data-toggle="buttons">
-                <label class="btn btn-danger px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-danger"> Op/4bet value
-                </label>
-                <label class="btn btn-warning px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-warning"> Op/4bet bluff
-                </label>
-                <label class="btn btn-primary px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-primary"> Op/Call 3bet
-                </label>
-                <label class="btn btn-success px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-success"> Op/Fold
-                </label>
-                <label class="btn btn-info px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-info"> Fold
-                </label>
-              </div>
-            </div>
-      {% else %}
-          <div class="bloc-bouton" id="action1">
-            <div class="btn-group-toggle btn-group-sm px-0 mx-auto" data-toggle="buttons">
-                <label class="btn btn-danger px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-danger"> 3bet/5bet
-                </label>
-                <label class="btn btn-secondary px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-secondary"> 3bet/Call
-                </label>
-                <label class="btn btn-warning px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-warning"> 3bet/Fold
-                </label>
-                <label class="btn btn-primary px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-primary"> Call vs 3x
-                </label>
-                <label class="btn btn-success px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-success"> Call vs 2,5x
-                </label>
-                <label class="btn btn-info px-1 mx-1">
-                  <input type="radio" name="actions" value="btn btn-info"> Fold
-                </label>
-            </div>
-          </div>
-      {% endif %}
-        <div class="bloc-bouton">
-            <button class="btn btn-primary px-2 mx-2" type="submit" id="AddNewRange">Enregistrer</button>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
         </div>
-        <div>{{ form.new_range(value=new_range) }}</div>
+
+        {{ form.csrf_token }}
+
+        <div class="row justify-content-center">
+            {% for poker_range in spot_ranges %}
+              <div class="row-cols-auto">
+                {{ render_range_editable(poker_range, loop.index) }}
+                <h4 class="text-center">Range {{ loop.index }}</h4>
+              </div>
+            {% endfor %}
+        </div>
+
+        {% if nbranges > 0 %}
+        <div class="row justify-content-center">
+            {{ form.removerange(class="btn btn-primary px-3 mx-1", value="<- supprimer la dernière range") }}
+            {% if nbranges < 4 %}
+                {{ form.addrange(class="btn btn-primary px-3 mx-1", value="Ajouter une range ->") }}
+            {% endif %}
+        {% endif %}
+        </div>
+
+        <div class="row justify-content-center">
+        {{ render_radio_hero2(form.phero) }}
+        </div>
+
+        <div class="row justify-content-center">
+        {{ render_radio_villain2(form.pvillain) }}
+        </div>
+
+        <div class="row justify-content-center">
+          {% if pvillain == 'UO' %}
+              <div class="row-cols-auto my-2" id="action2">
+                <div class="btn-group-toggle px-4" data-toggle="buttons">
+                    <label class="btn btn-danger btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-danger"> Op/4bet value
+                    </label>
+                    <label class="btn btn-warning btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-warning"> Op/4bet bluff
+                    </label>
+                    <label class="btn btn-primary btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-primary"> Op/Call 3bet
+                    </label>
+                    <label class="btn btn-success btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-success"> Op/Fold
+                    </label>
+                    <label class="btn btn-info btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-info"> Fold
+                    </label>
+                  </div>
+                </div>
+          {% else %}
+              <div class="row-cols-auto my-2" id="action1">
+                <div class="btn-group-toggle px-4" data-toggle="buttons">
+                    <label class="btn btn-danger btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-danger"> 3bet/5bet
+                    </label>
+                    <label class="btn btn-secondary btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-secondary"> 3bet/Call
+                    </label>
+                    <label class="btn btn-warning btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-warning"> 3bet/Fold
+                    </label>
+                    <label class="btn btn-primary btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-primary"> Call vs 3x
+                    </label>
+                    <label class="btn btn-success btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-success"> Call vs 2,5x
+                    </label>
+                    <label class="btn btn-info btn-lg px-3 mx-1">
+                      <input type="radio" name="actions" value="btn btn-info"> Fold
+                    </label>
+                </div>
+              </div>
+          {% endif %}
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="row-cols-auto my-4">
+                {{ form.submit(value="Enregistrer",class="btn btn-primary btn-lg px-3 mx-1") }}
+            </div>
+        </div>
+
+      <!-- pour créer des champs invisibles et modifier les ranges-->
+        {{ form.new_range(value=spot_ranges) }}
+
     </form>
 {% endblock %}

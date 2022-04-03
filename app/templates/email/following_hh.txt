@@ -1,0 +1,7 @@
+Bonjour,
+
+La main suivante est à revoir : N° {{ following_hh }}.
+
+Cordialement,
+
+6maxpokerrange

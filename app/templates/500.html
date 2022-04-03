@@ -1,7 +1,7 @@
-{% extends "menu.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h1>Une erreur est survenue</h1>
-    <p>L'administrateur a été prévenu. Désolé pour le contretemps!</p>
-    <p><a href="{{ url_for('index') }}">Retour</a></p>
+    <h1 class="text-center">Une erreur est survenue</h1>
+    <h4 class="text-center">L'administrateur a été prévenu. Désolé pour le contretemps!</h4>
+    <h4 class="text-center"><a href="{{ url_for('index') }}" class="badge badge-info">Retour</a></h4>
 {% endblock %}

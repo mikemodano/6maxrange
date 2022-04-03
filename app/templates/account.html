@@ -1,7 +1,40 @@
-{% extends "menu.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <h3>Mon compte</h3>
-    <p>Vous êtes connectés en tant que <b>{{ current_user.username }}</b></p>
-    <p>Pour vous déconnecter : <a href="{{ url_for('logout') }}" class="badge badge-info">Cliquez ici</a></p>
+    <h1 class="text-center my-3">Mon compte</h1>
+    <h4 class="text-center">Vous êtes connectés en tant que <b>{{ current_user.username }}</b></h4>
+    <h4 class="text-center">Pour vous déconnecter : <a href="{{ url_for('logout') }}" class="badge badge-info">Cliquez ici</a></h4>
+    <h1 class="text-center css-importer">Importer des mains</h1>
+    <form name="form" action="" method="post" class="form" role="form" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row justify-content-center">
+            <div class="col-md-3 text-center">
+                <div class="form-group">
+                <label for="uploads" class="form-label">Sélectionnez les fichiers à importer</label>
+                {{ form.uploads(class="form-control-lg") }}
+                {% for error in form.uploads.errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+                </div>
+                <div class="form-group">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="btn btn-primary btn-danger btn-block">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success btn-block" type="button" style="display:none;" id="loading" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Importation des mains en cours...
+                    </button>
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary btn-inline", onclick="ShowWaiting()") }}
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock %}

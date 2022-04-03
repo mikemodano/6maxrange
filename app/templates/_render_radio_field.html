@@ -1,21 +1,10 @@
+<!-- Pour l'affichage de la page de lecture des ranges-->
+
 {% macro render_radio_hero(field) %}
 <div class="bloc-bouton" id="{{ field.label.text }}">
   <div class="btn-group-toggle px-4" data-toggle="buttons">
       {% for subfield in field %}
       <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowFacing(this.id)">
-          {{ subfield }}
-          {{ subfield.label.text }}
-      </label>
-      {% endfor %}
-    </div>
-</div>
-{% endmacro %}
-
-{% macro render_radio_hero2(field) %}
-<div class="bloc-bouton" id="{{ field.label.text }}">
-  <div class="btn-group-toggle px-4" data-toggle="buttons">
-      {% for subfield in field %}
-      <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowFacing2(this.id)">
           {{ subfield }}
           {{ subfield.label.text }}
       </label>
@@ -37,19 +26,6 @@
 </div>
 {% endmacro %}
 
-{% macro render_radio_villain2(field) %}
-<div class="bloc-bouton" id="{{ field.label.text }}">
-  <div class="btn-group-toggle px-2" data-toggle="buttons">
-      {% for subfield in field %}
-      <label id="{{ subfield.label.text }}" class="btn btn-primary px-3 mx-1" onclick="ShowAction2(this.id)">
-          {{ subfield }}
-          {{ subfield.label.text }}
-      </label>
-      {% endfor %}
-    </div>
-</div>
-{% endmacro %}
-
 {% macro render_radio_num(field) %}
 <div class="bloc-bouton" id="{{ field.label.text }}">
   <div class="btn-group-toggle px-4" data-toggle="buttons">
@@ -63,15 +39,43 @@
 </div>
 {% endmacro %}
 
-{% macro render_radio_num2(field) %}
-<div class="bloc-bouton" id="{{ field.label.text }}">
+<!-- Pour l'affichage de la page de modification des ranges-->
+
+{% macro render_radio_hero2(field) %}
+<div class="row-cols-auto my-2" id="{{ field.label.text }}">
   <div class="btn-group-toggle px-4" data-toggle="buttons">
       {% for subfield in field %}
-      <label id="{{ subfield.label.text }}" class="btn btn-primary px-4 mx-3" onclick="ShowFreq2(this.id)">
+      <label id="{{ subfield.label.text }}" class="btn btn-primary btn-lg px-3 mx-1" onclick="ShowFacing2(this.id)">
           {{ subfield }}
           {{ subfield.label.text }}
       </label>
       {% endfor %}
     </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio_villain2(field) %}
+<div class="row-cols-auto my-2" id="{{ field.label.text }}">
+  <div class="btn-group-toggle px-4" data-toggle="buttons">
+      {% for subfield in field %}
+      <label id="{{ subfield.label.text }}" class="btn btn-primary btn-lg px-3 mx-1" onclick="ShowAction2(this.id)">
+          {{ subfield }}
+          {{ subfield.label.text }}
+      </label>
+      {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+<!-- Pour l'affichage de la page de création de rapports-->
+
+{% macro render_radio_limites(field) %}
+<div class="mb-3">
+    <p class="text-center">Filtrer sur une limite :
+    {% for subfield in field %}
+        {{ subfield(class="btn-check", autocomplete="off") }}
+        <label class="btn btn-primary px-4 mx-3" for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+    {% endfor %}
+    </p>
 </div>
 {% endmacro %}

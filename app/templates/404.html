@@ -1,6 +1,6 @@
-{% extends "menu.html" %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h1>Page introuvable</h1>
-    <p><a href="{{ url_for('index') }}">Retour</a></p>
+    <h1 class="text-center">La page est introuvable</h1>
+    <h4 class="text-center"><a href="{{ url_for('index') }}" class="badge badge-info">Retour</a></h4>
 {% endblock %}

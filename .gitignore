@@ -1,1 +1,14 @@
-/6maxenv
+/venv
+/__pycache__
+/.idea
+/.git
+/Doc_aide
+/logs
+/MAJ
+/migrations
+/table_csv
+/Requetes
+/app.db
+*.pyc
+*.gitignore
+*.gitattributes

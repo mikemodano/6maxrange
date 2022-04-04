@@ -1,1 +1,1 @@
-FLASK_APP=6max.py
+FLASK_APP=app.py
